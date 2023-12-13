@@ -16,17 +16,6 @@ from torch.utils.data import DataLoader
 import os
 import sys
 
-# add cwd to system path
-
-dir = os.getcwd()
-sys.path.append(dir)
-
-path = Path(dir)
-
-a = str(path.parent.absolute())
-
-sys.path.append(a)
-
 
 def mask_penalty(mask):
     w1 = 0.95
