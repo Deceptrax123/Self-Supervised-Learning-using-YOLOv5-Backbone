@@ -2,7 +2,8 @@ import torch
 from torch import nn
 import warnings
 
-# Modules obtained from ultralytics yolov5.
+# All Modules except UpConv obtained from ultralytics yolov5 repository.
+# UpConv is the custom model created for the decoder.
 
 
 def autopad(k, p=None, d=1):  # kernel, padding, dilation
@@ -13,6 +14,25 @@ def autopad(k, p=None, d=1):  # kernel, padding, dilation
     if p is None:
         p = k // 2 if isinstance(k, int) else [x // 2 for x in k]  # auto-pad
     return p
+
+
+class UpConv(nn.Module):
+    default_act = nn.SiLU()
+
+    def __init__(self, c1, c2, k=1, s=1, p=None, g=1, d=1, act=True, op=1):
+        super().__init__()
+
+        self.conv = nn.ConvTranspose2d(
+            c1, c2, k, s, padding=autopad(k, p, d), output_padding=op)
+        self.bn = nn.BatchNorm2d(c2)
+        self.act = self.default_act if act is True else act if isinstance(
+            act, nn.Module) else nn.Identity()
+
+    def forward(self, x):
+        return self.act(self.bn(self.conv(x)))
+
+    def forward_fuse(self, x):
+        return self.act(self.conv(x))
 
 
 class Conv(nn.Module):

@@ -15,7 +15,7 @@ class Backbone(nn.Module):
         self.c2 = C3(c1=128, c2=128)
         self.conv4 = Conv(c1=128, c2=256, s=2)
         self.c3 = C3(c1=256, c2=256)
-        self.conv5 = Conv(c1=256, c2=512)
+        self.conv5 = Conv(c1=256, c2=512, s=2)
         self.c4 = C3(c1=512, c2=512)
         self.conv6 = Conv(c1=512, c2=1024, s=2)
         self.c5 = C3(c1=1024, c2=1024)
@@ -25,21 +25,21 @@ class Backbone(nn.Module):
     def forward(self, x):
         x = self.conv1(x)
         x = self.conv2(x)
-        x = self.c1(x)
-        x = self.conv3(x)
-        x = self.c2(x)
-        x = self.conv4(x)
-        x = self.c3(x)
-        x = self.conv5(x)
-        x = self.c4(x)
-        x = self.conv6(x)
-        x = self.c5(x)
+        x1 = self.c1(x)
+        x = self.conv3(x1)
+        x2 = self.c2(x)
+        x = self.conv4(x2)
+        x3 = self.c3(x)
+        x = self.conv5(x3)
+        x4 = self.c4(x)
+        x = self.conv6(x4)
+        x5 = self.c5(x)
 
-        x = self.sppf(x)
+        x = self.sppf(x5)
 
-        return x
+        return x, x1, x2, x3, x4, x5
 
 
-model = Backbone()
+# model = Backbone()
 
-summary(model=model, input_size=(3, 256, 256), batch_size=8, device='cpu')
+# summary(model=model, input_size=(3, 256, 256), batch_size=8, device='cpu')
