@@ -40,7 +40,7 @@ def train_epoch():
         # Compute Loss
         # L2 Bounding Box Regularization
         loss = torch.mean(
-            torch.mul(objective(predictions, y_sample), lamb*mask_penalty(mask)))
+            torch.add(objective(predictions, y_sample), lamb*mask_penalty(mask)))
 
         # Perform backpropagation
         loss.backward()
@@ -106,10 +106,12 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                complete_path = "weights/w_0.95/model{epoch}.pth".format(
+                complete_path = "weights/w_0.95/model{epoch}.pt".format(
                     epoch=epoch+1)
 
-                torch.save(model.state_dict(), complete_path)
+                torch.save({'epoch': epoch+1,
+                            'model': model.backbone,
+                            }, complete_path)  # Save weights of backbone only.
 
 
 if __name__ == '__main__':
@@ -138,9 +140,9 @@ if __name__ == '__main__':
     test_set = WheatMaskDataset(paths=test)
 
     wandb.init(
-        project="backbone-pretraining-wheats",
+        project="backbone-yolov5-pretraining-wheats",
         config={
-            "architecture": "autoencoder with darknet53 backbone",
+            "architecture": "autoencoder with YOLOv5 Backbone",
             "dataset": "Global Wheat"
         }
     )
@@ -160,7 +162,7 @@ if __name__ == '__main__':
     model = Combined().to(device=device)
 
     # initialize weights
-    model.apply(initialize)
+    model.apply(initialize)  # Normal initializer mean=0, variance=1
 
     model_optimizer = torch.optim.Adam(
         model.parameters(), lr=LR, betas=(0.9, 0.999))
