@@ -106,12 +106,18 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                complete_path = "Scripts_from_scratch/weights/w_0.95/model{epoch}.pt".format(
+                backbone_path = "Scripts_from_scratch/weights/w_0.95/Backbone/model{epoch}.pt".format(
+                    epoch=epoch+1)
+                complete_path = "Scripts_from_scratch/weights/w_0.95/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
+                # Save Backbone Model for YOLOv5 fine tuning
                 torch.save({'epoch': epoch+1,
                             'model': model.backbone,
-                            }, complete_path)  # Save weights of backbone only.
+                            }, backbone_path)  # Save weights of backbone only.
+
+                # Save complete model weights to check reconstruction
+                torch.save(model.state_dict(), complete_path)
 
 
 if __name__ == '__main__':
