@@ -1,10 +1,10 @@
 # Match keys to yolov5
 import torch
-from Model.backbone import Backbone
 from collections import OrderedDict
 
 if __name__ == '__main__':
-    model = torch.load("/PATH/TO/MODEL")
+    model = torch.load(
+        "Scripts_from_scratch/weights/w_0.95/Backbone/model50.pt")
 
     weights_dict = model['model'].state_dict()
 
@@ -54,4 +54,4 @@ if __name__ == '__main__':
 
     # Save the updated state dictionary
     torch.save(
-        updated_dict, 'PATH/TO/UPDATED.PT')
+        updated_dict, 'Scripts_from_scratch/weights/w_0.95/yolov5/backbone_w_95.pt')

@@ -1,7 +1,7 @@
 import torch
 import torchvision.transforms as T
 import matplotlib.pyplot as plt
-from Scripts_from_scratch.Model.backbone import Backbone
+from Scripts_from_scratch.Model.combined import Combined
 import numpy as np
 from dotenv import load_dotenv
 import os
@@ -9,14 +9,13 @@ from PIL import Image
 import random
 
 if __name__ == '__main__':
-    obj = torch.load("PATH_TO_COMPLETE_MODEL")
+    weights = torch.load(
+        "Scripts_from_scratch/weights/w_0.95/Complete/model50.pt")
     load_dotenv('.env')
 
-    model = Backbone().to(device='cpu')
+    model = Combined().to(device='cpu')
     model.eval()
-    model.load_state_dict(obj['model'].float().state_dict())
-
-    print(obj['model'].float().state_dict().keys())
+    model.load_state_dict(weights)
 
     trainX_path = os.getenv("TRAIN_Y_PATH")
     trainY_path = os.getenv("TRAIN_Y_PATH")
@@ -63,3 +62,18 @@ if __name__ == '__main__':
     prediction_np = prediction_np.astype(np.uint8)
     prediction_hwc = prediction_np.transpose(0, 2, 3, 1)
     x = x.transpose(0, 2, 3, 1)
+
+    # Display
+    fig = plt.figure(figsize=(10, 10))
+    ax1 = fig.add_subplot(1, 3, 1)
+    ax1.imshow(x[0])
+    ax1.set_title("Input")
+
+    ax2 = fig.add_subplot(1, 3, 2)
+    ax2.imshow(np.array(mask_x))
+    ax2.set_title("Box Locations")
+
+    ax3 = fig.add_subplot(1, 3, 3)
+    ax3.imshow(prediction_hwc[0])
+    ax3.set_title("Predicted")
+    plt.show()

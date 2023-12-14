@@ -12,8 +12,8 @@ class Combined(Module):
         self.decoder = Decoder()
 
     def forward(self, x):
-        x, x1, x2, x3, x4, x5 = self.backbone.forward(x)
-        x = self.decoder(x, x1, x2, x3, x4, x5)
+        x, x1, x2, x3, x4 = self.backbone.forward(x)
+        x = self.decoder(x, x1, x2, x3, x4)
 
         return x
 
