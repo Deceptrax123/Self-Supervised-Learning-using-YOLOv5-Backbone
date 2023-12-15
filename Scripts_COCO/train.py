@@ -112,7 +112,7 @@ def training_loop():
             if ((epoch+1) % 5 == 0):
                 backbone_path = "Scripts_COCO/weights/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts_COCO/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts_COCO/weights/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning

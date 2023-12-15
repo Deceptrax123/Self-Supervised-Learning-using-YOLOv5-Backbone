@@ -14,18 +14,6 @@ def update_keys(original_dict):
 
     # Change keys to Backbone Module keys
     module_dict = OrderedDict()
-    yolo_mapping = {
-        "conv1": "model.0.",
-        "conv2": "model.1.",
-        "c1": "model.2.",
-        "conv3": "model.3.",
-        "c2": "model.4.",
-        "conv4": "model.5.",
-        "c3": "model.6.",
-        "conv5": "model.7.",
-        "c4": "model.8.",
-        "sppf": "model.9."
-    }
 
     for key, val in updated_dict.items():
         if "model.0." in key:
