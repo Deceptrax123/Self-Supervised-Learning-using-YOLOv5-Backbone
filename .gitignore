@@ -13,6 +13,7 @@ Icon
 #Weights,wandb etc
 weights/
 wandb/
+*.pt
 
 # Thumbnails
 ._*
