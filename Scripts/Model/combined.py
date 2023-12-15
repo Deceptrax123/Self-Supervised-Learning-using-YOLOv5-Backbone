@@ -1,5 +1,5 @@
-from Scripts_from_scratch.Model.backbone import Backbone
-from Scripts_from_scratch.Model.decoder import Decoder
+from Scripts.Model.backbone import Backbone
+from Scripts.Model.decoder import Decoder
 from torch.nn import Module
 from torchsummary import summary
 

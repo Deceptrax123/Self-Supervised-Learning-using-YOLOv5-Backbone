@@ -1,7 +1,7 @@
 import torch
 import torchvision.transforms as T
 import matplotlib.pyplot as plt
-from Scripts_from_scratch.Model.combined import Combined
+from Scripts.Model.combined import Combined
 import numpy as np
 from dotenv import load_dotenv
 import os
@@ -10,7 +10,7 @@ import random
 
 if __name__ == '__main__':
     weights = torch.load(
-        "Scripts_from_scratch/weights/w_0.95_lambda_5/Complete/model105.pt")
+        "Scripts/weights/w_0.95_lambda_10/Complete/model25.pt")
     load_dotenv('.env')
 
     model = Combined().to(device='cpu')

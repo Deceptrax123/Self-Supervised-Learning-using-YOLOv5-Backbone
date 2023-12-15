@@ -7,9 +7,9 @@ from torch import nn
 from torch import mps
 import torch.multiprocessing
 import wandb
-from Scripts_from_scratch.initialize_weights import initialize
+from Scripts.initialize_weights import initialize
 from Model.combined import Combined
-from Scripts_from_scratch.dataset_regularization import WheatMaskDataset
+from Scripts.dataset_regularization import WheatMaskDataset
 from pathlib import Path
 import torch
 from torch.utils.data import DataLoader
@@ -106,9 +106,9 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts_from_scratch/weights/w_0.95_lambda_5/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts/weights/w_0.95_lambda_10/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts_from_scratch/weights/w_0.95_lambda_5/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts/weights/w_0.95_lambda_10/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
@@ -172,7 +172,7 @@ if __name__ == '__main__':
 
     model_optimizer = torch.optim.Adam(
         model.parameters(), lr=LR, betas=(0.9, 0.999))
-    lamb = 5
+    lamb = 10
 
     train_steps = (len(train)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test)+params['batch_size']-1)//params['batch_size']

@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 if __name__ == '__main__':
     model = torch.load(
-        "Scripts_from_scratch/weights/w_0.95_lambda_5/Backbone/model105.pt")
+        "Scripts/weights/w_0.95_lambda_10/Backbone/model25.pt")
 
     weights_dict = model['model'].state_dict()
 
@@ -54,4 +54,4 @@ if __name__ == '__main__':
 
     # Save the updated state dictionary
     torch.save(
-        updated_dict, 'Scripts_from_scratch/weights/w_0.95_lambda_5/yolov5/backbone_w_95_lambda5.pt')
+        updated_dict, 'Scripts/weights/w_0.95_lambda_10/yolov5/backbone_w_95_lambda10.pt')

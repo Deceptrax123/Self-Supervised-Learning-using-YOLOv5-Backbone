@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from Scripts_from_scratch.Model.model_segments.modules import C3, Conv, SPPF
+from Scripts.Model.model_segments.modules import C3, Conv, SPPF
 from torchsummary import summary
 
 

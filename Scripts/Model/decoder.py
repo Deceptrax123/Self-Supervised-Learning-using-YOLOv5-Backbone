@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 from torchsummary import summary
-from Scripts_from_scratch.Model.model_segments.modules import C3, Conv, SPPF, UpConv
+from Scripts.Model.model_segments.modules import C3, Conv, SPPF, UpConv
 from torch.nn import Upsample, Conv2d
 
 # Scripts for creating symmetrical decoder to backbone of yolov5
