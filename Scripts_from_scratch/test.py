@@ -10,7 +10,7 @@ import random
 
 if __name__ == '__main__':
     weights = torch.load(
-        "Scripts_from_scratch/weights/w_0.95/Complete/model50.pt")
+        "Scripts_from_scratch/weights/w_0.95_lambda_5/Complete/model105.pt")
     load_dotenv('.env')
 
     model = Combined().to(device='cpu')
