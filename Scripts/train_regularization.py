@@ -106,9 +106,9 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts/weights/w_0.95_lambda_10/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts/weights/lamb_0/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts/weights/w_0.95_lambda_10/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts/weights/lamb_0/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
@@ -172,7 +172,7 @@ if __name__ == '__main__':
 
     model_optimizer = torch.optim.Adam(
         model.parameters(), lr=LR, betas=(0.9, 0.999))
-    lamb = 10
+    lamb = 0
 
     train_steps = (len(train)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test)+params['batch_size']-1)//params['batch_size']
