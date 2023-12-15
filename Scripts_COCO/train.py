@@ -11,7 +11,7 @@ from Scripts_COCO.initialize_weights import initialize
 from Scripts_COCO.Model.backbone import Backbone
 from Scripts_COCO.Model.decoder import Decoder
 from Model.combined import Combined
-from Scripts_COCO.dataset_regularization import WheatMaskDataset
+from Scripts_COCO.dataset import WheatMaskDataset
 from helpers.match_keys import update_keys as match
 from pathlib import Path
 import torch
@@ -110,9 +110,9 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts/weights/lamb_0/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts_COCO/weights/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts/weights/lamb_0/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts_COCO/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
@@ -149,13 +149,13 @@ if __name__ == '__main__':
     train_set = WheatMaskDataset(paths=train)
     test_set = WheatMaskDataset(paths=test)
 
-    # wandb.init(
-    #     project="backbone-yolov5-pretraining-wheats",
-    #     config={
-    #         "architecture": "autoencoder with YOLOv5 Backbone",
-    #         "dataset": "Global Wheat"
-    #     }
-    # )
+    wandb.init(
+        project="backbone-yolov5-pretraining-wheats",
+        config={
+            "architecture": "autoencoder with YOLOv5 Backbone",
+            "dataset": "Global Wheat"
+        }
+    )
 
     train_loader = DataLoader(train_set, **params)
     test_loader = DataLoader(test_set, **params)

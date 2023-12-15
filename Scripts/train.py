@@ -9,7 +9,7 @@ import torch.multiprocessing
 import wandb
 from Scripts.initialize_weights import initialize
 from Model.combined import Combined
-from Scripts.dataset_regularization import WheatMaskDataset
+from Scripts.dataset import WheatMaskDataset
 from pathlib import Path
 import torch
 from torch.utils.data import DataLoader
