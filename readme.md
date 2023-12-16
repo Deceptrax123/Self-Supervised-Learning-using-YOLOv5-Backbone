@@ -7,7 +7,7 @@
 ## Methdology 
 - We pre-train the backbone of YOLOv5 from scratch and by transfering the  weights of ```yolov5s.pt```.
 - The loss function is an L2 Pixel-Wise Loss with additional focus on pixels belonging to a bounding box
-- The keys of the backbone of this model is then matched with the Ultralytics YOLov5 state dictionary structure enabling us to fine-tune these weights on Ultralytics YOLOv5.
+- The keys of the backbone of this model is then matched with the Ultralytics YOLOv5 state dictionary structure enabling us to fine-tune these weights on Ultralytics YOLOv5.
 - The Global Wheat 2021 dataset was used for all experiments
  
   
