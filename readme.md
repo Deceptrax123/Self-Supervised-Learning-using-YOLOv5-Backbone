@@ -1,7 +1,7 @@
 # Pretraining YOLOv5 Backbone: Cross Stage Partial Convolutions DarkNet with SPP
 
 - Self supervised autoencoder approach aimed towards improving the detections of SOTA object detector YOLOv5 by detecting and re-constructing multiple objects in an image. 
-- Apart from which, the project aims at contributing to Ultralytics YOLOv5 constructing a method of loading only backbone weights to models for training and fine-tuning.
+- Apart from which, the project aims at contributing to Ultralytics YOLOv5 by constructing a method of transferring only backbone weights to models for training and fine-tuning.
   
 
 ## Methdology 
@@ -20,7 +20,7 @@
 
 ## Directory Structure
 ```  
-├── Experiments
+├── Outputs
 │   ├── *.png
 ├── Helpers
 │   ├── mask.py
