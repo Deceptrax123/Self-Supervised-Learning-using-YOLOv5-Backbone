@@ -1,7 +1,9 @@
 import torch
 import torchvision.transforms as T
 import matplotlib.pyplot as plt
-from Scripts.Model.combined import Combined
+from Scripts_COCO.Model.combined import Combined
+from Scripts_COCO.Model.backbone import Backbone
+from Scripts_COCO.Model.decoder import Decoder
 import numpy as np
 from dotenv import load_dotenv
 import os
@@ -10,10 +12,10 @@ import random
 
 if __name__ == '__main__':
     weights = torch.load(
-        "Scripts_COCO/weights/Complete/model20.pt")
+        "Scripts_COCO/weights/Complete/model25.pt")
     load_dotenv('.env')
 
-    model = Combined().to(device='cpu')
+    model = Combined(Backbone=Backbone(), Decoder=Decoder()).to(device='cpu')
     model.eval()
     model.load_state_dict(weights)
 

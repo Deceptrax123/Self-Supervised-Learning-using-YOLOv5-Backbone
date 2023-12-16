@@ -54,4 +54,4 @@ if __name__ == '__main__':
 
     # Save the updated state dictionary
     torch.save(
-        updated_dict, 'Scripts_COCO/weights/yolov5/backbone_w_95_lambda50.pt')
+        updated_dict, 'Scripts_COCO/weights/yolov5/backbone_coco.pt')
