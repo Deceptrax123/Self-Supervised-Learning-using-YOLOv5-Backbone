@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 if __name__ == '__main__':
     model = torch.load(
-        "Scripts/weights/lamb_0/Backbone/model25.pt")
+        "Scripts/weights/w_0.95_lambda_50/Backbone/model25.pt")
 
     weights_dict = model['model'].state_dict()
 
@@ -19,9 +19,7 @@ if __name__ == '__main__':
         "c3": "model.6.",
         "conv5": "model.7.",
         "c4": "model.8.",
-        "conv6": "model.9.",
-        "c5": "model.10.",
-        "sppf": "model.11."
+        "sppf": "model.9."
     }
 
     for key, val in weights_dict.items():
@@ -35,8 +33,6 @@ if __name__ == '__main__':
             updated_key = str.replace(key, "conv4.", yolo_mapping['conv4'])
         elif "conv5" in key:
             updated_key = str.replace(key, "conv5.", yolo_mapping['conv5'])
-        elif "conv6" in key:
-            updated_key = str.replace(key, "conv6.", yolo_mapping['conv6'])
         elif "c1" in key:
             updated_key = str.replace(key, 'c1.', yolo_mapping['c1'])
         elif "c2" in key:
@@ -45,8 +41,6 @@ if __name__ == '__main__':
             updated_key = str.replace(key, 'c3.', yolo_mapping['c3'])
         elif "c4" in key:
             updated_key = str.replace(key, 'c4.', yolo_mapping['c4'])
-        elif "c5" in key:
-            updated_key = str.replace(key, 'c5.', yolo_mapping['c5'])
         elif "sppf" in key:
             updated_key = str.replace(key, 'sppf.', yolo_mapping['sppf'])
 
@@ -54,4 +48,4 @@ if __name__ == '__main__':
 
     # Save the updated state dictionary
     torch.save(
-        updated_dict, 'Scripts/weights/lamb_0/yolov5/backbone_lambda0.pt')
+        updated_dict, 'Scripts/weights/w_0.95_lambda_50/yolov5/backbone_w_0.95_lambda50.pt')

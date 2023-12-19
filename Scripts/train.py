@@ -15,13 +15,27 @@ import torch
 from torch.utils.data import DataLoader
 import os
 import sys
+import numpy as np
 
 
 def mask_penalty(mask):
-    w1 = 0.95
-    w2 = 0.05
+    # channels = 1
 
-    weighted_mask = (torch.where(mask == 1.0, w1**2, w2**2)).to(device=device)
+    # for i in range(channels):
+    # egion = mask[:, i, :, :]
+
+    #     ones = (egion == 1.).sum()
+    #     zeros = (egion == 0.).sum()
+
+    #     if ones == 0:
+    #         ones = np.inf
+
+    # total = 256*256*mask.size(0)
+    # invweight_zeros = total/zeros
+    # invweight_ones = total/ones
+
+    weighted_mask = torch.where(
+        mask == 1., 1/0.05, 1/0.95).to(device=device)
 
     return weighted_mask
 
@@ -40,7 +54,7 @@ def train_epoch():
         # Compute Loss
         # L2 Bounding Box Regularization
         loss = torch.mean(
-            torch.add(objective(predictions, y_sample), lamb*mask_penalty(mask)))
+            torch.mul(objective(predictions, y_sample), mask_penalty(mask)))
 
         # Perform backpropagation
         loss.backward()
@@ -106,9 +120,9 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts/weights/lamb_0/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts/weights/att_0.95/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts/weights/lamb_0/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts/weights/att_0.95/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
@@ -172,7 +186,6 @@ if __name__ == '__main__':
 
     model_optimizer = torch.optim.Adam(
         model.parameters(), lr=LR, betas=(0.9, 0.999))
-    lamb = 0
 
     train_steps = (len(train)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test)+params['batch_size']-1)//params['batch_size']
