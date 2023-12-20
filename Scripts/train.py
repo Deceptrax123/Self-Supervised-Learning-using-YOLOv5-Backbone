@@ -35,7 +35,7 @@ def mask_penalty(mask):
     # invweight_ones = total/ones
 
     weighted_mask = torch.where(
-        mask == 1., 1/0.01, 1/0.99).to(device=device)
+        mask == 1., 1/0.05, 1/0.95).to(device=device)
 
     return weighted_mask
 
@@ -121,9 +121,9 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts/weights/att_0.95/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts/weights/att_0.95_ymasked/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts/weights/att_0.95/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts/weights/att_0.95_ymasked/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
