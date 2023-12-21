@@ -61,7 +61,7 @@ def resize_image():
                 list(map(list, transformed['bboxes']))).astype(int), img=transformed['image'])
 
         else:
-            img = np.zeros(shape=(256, 256), dtype=np.uint8)
+            img = np.zeros(shape=(256, 256, 3), dtype=np.float32)
             cv2.imwrite(mask_path+key+'.png', img)
 
 
