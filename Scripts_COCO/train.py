@@ -22,10 +22,8 @@ import sys
 
 
 def mask_penalty(mask):
-    w1 = 0.95
-    w2 = 0.05
-
-    weighted_mask = (torch.where(mask == 1.0, w1**2, w2**2)).to(device=device)
+    weighted_mask = torch.where(
+        mask == 1., 1/0.05, 1/0.95).to(device=device)
 
     return weighted_mask
 
@@ -44,7 +42,7 @@ def train_epoch():
         # Compute Loss
         # L2 Bounding Box Regularization
         loss = torch.mean(
-            torch.add(objective(predictions, y_sample), lamb*mask_penalty(mask)))
+            torch.mul(objective(predictions, y_sample), mask_penalty(mask)))
 
         # Perform backpropagation
         loss.backward()
@@ -67,14 +65,16 @@ def train_epoch():
 def test_epoch():
     epoch_loss = 0
 
-    for step, (x_sample, y_sample, _) in enumerate(test_loader):
+    for step, (x_sample, y_sample, mask) in enumerate(test_loader):
         x_sample = x_sample.to(device=device)
         y_sample = y_sample.to(device=device)
+        mask = mask.to(device=device)
 
         predictions = model(x_sample)
 
         # Compute Loss
-        loss = torch.mean(objective(predictions, y_sample))
+        loss = torch.mean(
+            torch.mul(objective(predictions, y_sample), mask_penalty(mask)))
 
         # add losses
         epoch_loss += loss.item()
