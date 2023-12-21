@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 if __name__ == '__main__':
     model = torch.load(
-        "Scripts_COCO/weights/Backbone/model25.pt")
+        "Scripts_COCO/weights/Backbone/model50.pt")
 
     weights_dict = model['model'].state_dict()
 
