@@ -95,9 +95,6 @@ def training_loop():
         model.train(True)
         train_loss = train_epoch()
 
-        # Update learning rate after each epoch
-        scheduler.step()
-
         model.eval()
         with torch.no_grad():
 
@@ -126,6 +123,9 @@ def training_loop():
 
                 # Save complete model weights to check reconstruction
                 torch.save(model.state_dict(), complete_path)
+
+        # Update Learning Rate
+        scheduler.step()
 
 
 if __name__ == '__main__':
