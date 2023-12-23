@@ -95,6 +95,9 @@ def training_loop():
         model.train(True)
         train_loss = train_epoch()
 
+        # Update learning rate after each epoch
+        scheduler.step()
+
         model.eval()
         with torch.no_grad():
 
@@ -105,7 +108,8 @@ def training_loop():
 
             wandb.log({
                 "L2 Pixel Regularization Train Loss": train_loss,
-                "L2 Pixel Test Loss": test_loss
+                "L2 Pixel Test Loss": test_loss,
+                "Learning Rate": model_optimizer.param_groups[0]['lr']
             })
 
             # checkpoints
@@ -188,7 +192,10 @@ if __name__ == '__main__':
 
     model_optimizer = torch.optim.Adam(
         model.parameters(), lr=LR, betas=(0.9, 0.999))
-    lamb = 10
+
+    # LR scheduler
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+        model_optimizer, 20, eta_min=0.0000000000000001, verbose=True)
 
     train_steps = (len(train)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test)+params['batch_size']-1)//params['batch_size']

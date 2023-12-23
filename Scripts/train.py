@@ -106,6 +106,9 @@ def training_loop():
         model.train(True)
         train_loss = train_epoch()
 
+        # Change the lr after train epoch
+        scheduler.step()
+
         model.eval()
         with torch.no_grad():
 
@@ -116,14 +119,15 @@ def training_loop():
 
             wandb.log({
                 "L2 Pixel Regularization Train Loss": train_loss,
-                "L2 Pixel Test Loss": test_loss
+                "L2 Pixel Test Loss": test_loss,
+                "Learning Rate": model_optimizer.param_groups[0]['lr']
             })
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts/weights/att_0.95_ymasked/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts/weights/att_0.95_cosine/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts/weights/att_0.95_ymasked/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts/weights/att_0.95_cosine/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
@@ -187,6 +191,10 @@ if __name__ == '__main__':
 
     model_optimizer = torch.optim.Adam(
         model.parameters(), lr=LR, betas=(0.9, 0.999))
+
+    # LR scheduler
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+        model_optimizer, 20, eta_min=0.00000000001, verbose=True)
 
     train_steps = (len(train)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test)+params['batch_size']-1)//params['batch_size']
