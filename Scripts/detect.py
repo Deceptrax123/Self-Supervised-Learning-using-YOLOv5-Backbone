@@ -13,7 +13,7 @@ import cv2
 
 if __name__ == '__main__':
     weights = torch.load(
-        "Scripts/weights/att_0.95_ymasked/Complete/model75.pt")
+        "Scripts/weights/att_0.95_cosine/Complete/model155.pt")
     load_dotenv('.env')
 
     model = Combined().to(device='cpu')

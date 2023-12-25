@@ -12,7 +12,7 @@ import random
 
 if __name__ == '__main__':
     weights = torch.load(
-        "Scripts_COCO/weights/Complete/model50.pt")
+        "Scripts_COCO/weights/Complete/model290.pt")
     load_dotenv('.env')
 
     model = Combined(Backbone=Backbone(), Decoder=Decoder()).to(device='cpu')
