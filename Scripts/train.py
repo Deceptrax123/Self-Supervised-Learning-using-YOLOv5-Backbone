@@ -35,7 +35,7 @@ def mask_penalty(mask):
     # invweight_ones = total/ones
 
     weighted_mask = torch.where(
-        mask == 1., 1/0.05, 1/0.95).to(device=device)
+        mask == 1., 1/0.01, 1/0.99).to(device=device)
 
     return weighted_mask
 
@@ -122,9 +122,9 @@ def training_loop():
 
             # checkpoints
             if ((epoch+1) % 5 == 0):
-                backbone_path = "Scripts/weights/att_0.95_cosine/Backbone/model{epoch}.pt".format(
+                backbone_path = "Scripts/weights/Backbone/model{epoch}.pt".format(
                     epoch=epoch+1)
-                complete_path = "Scripts/weights/att_0.95_cosine/Complete/model{epoch}.pt".format(
+                complete_path = "Scripts/weights/Complete/model{epoch}.pt".format(
                     epoch=epoch+1)
 
                 # Save Backbone Model for YOLOv5 fine tuning
@@ -136,7 +136,7 @@ def training_loop():
                 torch.save(model.state_dict(), complete_path)
 
         # Update learning rate
-        scheduler.step()
+        scheduler.step(test_loss)
 
 
 if __name__ == '__main__':
@@ -193,8 +193,8 @@ if __name__ == '__main__':
         model.parameters(), lr=LR, betas=(0.9, 0.999))
 
     # LR scheduler
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
-        model_optimizer, 20, eta_min=0.00000000001, verbose=True)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer=model_optimizer)
 
     train_steps = (len(train)+params['batch_size']-1)//params['batch_size']
     test_steps = (len(test)+params['batch_size']-1)//params['batch_size']
