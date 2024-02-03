@@ -1,6 +1,7 @@
-# Pretraining YOLOv5 Backbone: Cross Stage Partial Convolutions DarkNet with SPP
+# Pretraining YOLOv5 Backbone: Cross Stage Partial Convolutions DarkNet with Spatial Pyramid Pooling
 
 - Self supervised autoencoder approach aimed towards improving the detections of SOTA object detector YOLOv5 by detecting and re-constructing multiple objects in an image. 
+- This approach effectively performs semantic segmentation without pixel-wise annotations but uses only the bounding box coordinates.
 - Apart from which, the project aims at contributing to Ultralytics YOLOv5 by constructing a method of transferring only backbone weights to models for training and fine-tuning.
   
 
@@ -64,7 +65,7 @@
 - Create directories to save checkpoints and edit the paths as required in the ```train.py``` files.
 - To train from Scratch, run the  ```train.py``` file under ```Scripts```, for fine-tuning yolov5s backbone, run ```train.py``` under ```Scripts_COCO```
 - After generating the weights, run the ```keys.py``` file to match the state dictionary keys to that of YOLOv5.
-- Usage of these backbone weights for Ultralytics YOLOv5 training and fine-tuning will be detailed in the upcoming release.
+  
   
 ## Environment Variables
 |Variable|Description|
